@@ -102,3 +102,4 @@ document.querySelectorAll('[data-view-jump]').forEach(b=>b.addEventListener('cli
 subjectGrid.addEventListener('click',e=>{const b=e.target.closest('[data-subject]');if(b)openNote(b.dataset.subject)});
 function initialView(){const requested=location.hash.replace('#','');showView(requested==='about'||requested==='notes'?requested:'home',false)}
 window.addEventListener('hashchange',initialView);initialView();</script></body></html>
+<!-- update -->
