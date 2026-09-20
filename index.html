@@ -114,6 +114,40 @@ header:after{width:220px;height:220px;right:-60px;bottom:12%;background:rgba(231
 
 /* Quiz readability and timed scoring */
 .quiz-timer{font-size:34px;font-weight:950;color:var(--gold);text-align:right;line-height:1;margin:4px 0 10px}.quiz-q{overflow-wrap:anywhere;word-break:normal}.quiz-option{white-space:normal;overflow-wrap:anywhere;min-height:52px}.quiz-option.host-option{cursor:default;background:#f7fbfc}.quiz-point-rule{margin-top:12px;padding:10px 12px;border-radius:10px;background:#eef7f8;color:var(--teal);font-size:13px;font-weight:800}.host-table-wrap{overflow-x:auto}.host-table{width:100%;border-collapse:collapse;min-width:720px;background:#fff}.host-table th,.host-table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.host-table th{color:var(--teal);background:#f6fafb}.quiz-shell .lead,.quiz-shell .quiz-note{overflow-wrap:anywhere}.quiz-select{color:#fff!important}.quiz-select option{color:#102a43!important;background:#fff!important}.quiz-select::placeholder{color:#6b7d86}.quiz-card,.panel{overflow:visible}
+
+/* Clean multiplayer live screens */
+#quiz.quiz-player-mode .section-head,
+#quiz.quiz-player-mode .quiz-head,
+#quiz.quiz-player-mode #quizStats,
+#quiz.quiz-player-mode #hostControlPanel,
+#quiz.quiz-player-mode #subjectControls,
+#quiz.quiz-player-mode #rankingPanel,
+#quiz.quiz-host-live .section-head,
+#quiz.quiz-host-live .quiz-head,
+#quiz.quiz-host-live #hostControlPanel,
+#quiz.quiz-host-live #subjectControls,
+#quiz.quiz-host-live #rankingPanel {
+  display:none !important;
+}
+#quiz.quiz-player-mode .quiz-shell,
+#quiz.quiz-host-live .quiz-shell {
+  margin-top:0 !important;
+}
+#quiz.quiz-player-mode .quiz-shell > #quizCard,
+#quiz.quiz-host-live .quiz-shell > #quizCard {
+  margin-top:0 !important;
+}
+#quiz.quiz-host-live #quizStats {
+  display:grid !important;
+  margin-top:0 !important;
+}
+#quiz.quiz-player-mode .quiz-waiting-screen {
+  min-height:55vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
 </style>
 <style>
 /* Multiplayer waiting/live/final-result screens */
@@ -224,7 +258,7 @@ header:after{width:220px;height:220px;right:-60px;bottom:12%;background:rgba(231
 <div class="section-head"><div class="eyebrow">Hosted Multiplayer Quiz</div><h3 id="quiz-title">Professional MLT Quiz</h3><p class="lead">One host creates the room. Players join by a 6-digit number or QR code. The host sees the live leaderboard and all player statistics.</p></div>
 <div class="quiz-shell">
 <div class="quiz-head"><div><span class="quiz-badge">✦ Host Controlled</span><h4 style="font-size:30px;margin-top:10px">Fast 6-Second Challenge</h4><p class="quiz-note">Only one host controls the room. Each question stays open for 6 seconds. Answers in the first 3 seconds earn 100 points; answers during seconds 4–6 earn 50 points. Then the next question appears automatically.</p></div><div class="quiz-meta"><span>50 unique questions</span><span>6 sec / question</span><span>100 / 50 points</span></div></div>
-<div class="panel" style="margin-top:18px;background:rgba(255,255,255,.97)">
+<div class="panel" id="hostControlPanel" style="margin-top:18px;background:rgba(255,255,255,.97)">
 <div class="note-title"><div><div class="eyebrow">Host</div><h4 style="font-size:24px;color:var(--teal)">Create One Host Room</h4></div></div>
 <div class="quiz-controls" style="margin-top:0"><button class="quiz-btn" id="createRoomBtn" type="button">Create Host Room</button><button class="quiz-btn" id="hostStartBtn" type="button" style="display:none">Start 50-Question Quiz</button></div>
 <div id="hostRoomBox" style="display:none;margin-top:16px"><div style="font-size:14px;color:var(--muted)">Share this 6-digit number or scan the QR code. Only this host can start/control the quiz.</div><div id="roomCodeDisplay" style="font-size:42px;font-weight:900;letter-spacing:8px;color:var(--teal);margin:6px 0"></div><div id="roomQr" style="display:inline-block;padding:12px;background:#fff;border:1px solid var(--line);border-radius:12px"></div><div id="roomStatus" class="quiz-note" style="margin-top:12px">Waiting for players…</div></div>
@@ -232,7 +266,7 @@ header:after{width:220px;height:220px;right:-60px;bottom:12%;background:rgba(231
 <div class="panel" style="margin-top:18px;background:rgba(255,255,255,.97)" id="joinPanel">
 <div class="note-title"><div><div class="eyebrow">Player Join</div><h4 style="font-size:24px;color:var(--teal)">Join from Phone</h4></div></div>
 <div class="quiz-controls" style="margin-top:0"><input id="joinCode" class="quiz-select" style="background:#fff !important;color:#111 !important;border:1px solid var(--line);letter-spacing:3px;font-size:20px;font-weight:800;opacity:1" maxlength="6" inputmode="numeric" placeholder="6-digit room number" aria-label="Room number"><input id="joinName" class="quiz-select" style="background:#fff !important;color:#111 !important;border:1px solid var(--line);opacity:1" maxlength="24" placeholder="Player name" aria-label="Player name"><select id="joinAvatar" class="quiz-select" style="background:#fff;color:var(--ink);border:1px solid var(--line)" aria-label="Player avatar"><option>🧑‍🔬</option><option>👨‍⚕️</option><option>👩‍⚕️</option><option>🧑‍💻</option><option>🧪</option><option>🔬</option><option>🧬</option><option>🩸</option></select><button class="quiz-btn" id="joinPlayerBtn" type="button">Join as Player</button></div><div id="joinStatus" class="quiz-note" style="margin-top:12px"></div></div>
-<div class="quiz-controls" style="margin-top:18px"><label><span style="position:absolute;left:-9999px">Quiz subject</span><select id="quizSubject" class="quiz-select"><option value="all">All Professional Subjects</option><option value="Anatomy">Anatomy</option><option value="Physiology">Physiology</option><option value="Biochemistry">Biochemistry</option><option value="Hematology">Hematology</option><option value="Clinical Pathology">Clinical Pathology</option><option value="Medical Microbiology">Medical Microbiology</option><option value="Parasitology">Parasitology</option><option value="Immunology & Serology">Immunology & Serology</option><option value="Histopathology">Histopathology</option><option value="Cytology">Cytology</option><option value="Blood Banking & Immunohematology">Blood Banking & Immunohematology</option><option value="Molecular Biology">Molecular Biology</option><option value="Genetics">Genetics</option><option value="Laboratory Instrumentation">Laboratory Instrumentation</option><option value="Laboratory Management & Quality Control">Laboratory Management & Quality Control</option><option value="Research Methodology & Biostatistics">Research Methodology & Biostatistics</option><option value="Nutrition & Dietetics">Nutrition & Dietetics</option><option value="Medical Ethics & Professional Practice">Medical Ethics & Professional Practice</option></select></label></div>
+<div class="quiz-controls" id="subjectControls" style="margin-top:18px"><label><span style="position:absolute;left:-9999px">Quiz subject</span><select id="quizSubject" class="quiz-select"><option value="all">All Professional Subjects</option><option value="Anatomy">Anatomy</option><option value="Physiology">Physiology</option><option value="Biochemistry">Biochemistry</option><option value="Hematology">Hematology</option><option value="Clinical Pathology">Clinical Pathology</option><option value="Medical Microbiology">Medical Microbiology</option><option value="Parasitology">Parasitology</option><option value="Immunology & Serology">Immunology & Serology</option><option value="Histopathology">Histopathology</option><option value="Cytology">Cytology</option><option value="Blood Banking & Immunohematology">Blood Banking & Immunohematology</option><option value="Molecular Biology">Molecular Biology</option><option value="Genetics">Genetics</option><option value="Laboratory Instrumentation">Laboratory Instrumentation</option><option value="Laboratory Management & Quality Control">Laboratory Management & Quality Control</option><option value="Research Methodology & Biostatistics">Research Methodology & Biostatistics</option><option value="Nutrition & Dietetics">Nutrition & Dietetics</option><option value="Medical Ethics & Professional Practice">Medical Ethics & Professional Practice</option></select></label></div>
 <div id="quizStats" class="stats" style="display:none"><div class="stat"><strong id="statPlayers">0</strong><span>Players connected</span></div><div class="stat"><strong id="statAnswered">0</strong><span>Answers recorded</span></div><div class="stat"><strong id="statAverage">0%</strong><span>Group accuracy</span></div></div>
 <div class="quiz-card" id="quizCard"><div class="quiz-result"><h4>Waiting for host room</h4><p class="lead" style="margin:0 auto;max-width:650px">The host creates the room number. Players join by number or QR code, then wait for the host to start.</p></div></div>
 <div id="rankingPanel" class="panel" style="display:none;margin-top:20px"><div class="note-title"><div><div class="eyebrow">Live Ranking</div><h4 style="font-size:28px;color:var(--teal)">Leaderboard</h4></div></div><div id="rankingList"></div></div>
@@ -327,6 +361,13 @@ let players=[];
 let session=null;
 function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
 function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function setQuizScreenMode(mode){
+  const q=document.getElementById('quiz');
+  if(!q)return;
+  q.classList.remove('quiz-player-mode','quiz-host-live');
+  if(mode==='player')q.classList.add('quiz-player-mode');
+  if(mode==='host-live')q.classList.add('quiz-host-live');
+}
 function setJoinStatus(t){const e=document.getElementById('joinStatus');if(e)e.textContent=t}
 function setRoomStatus(t){const e=document.getElementById('roomStatus');if(e)e.textContent=t}
 function updateStats(){const total=players.reduce((n,p)=>n+(p.answered||0),0),correct=players.reduce((n,p)=>n+(p.correct||0),0);document.getElementById('statPlayers').textContent=players.filter(p=>p.connected).length;document.getElementById('statAnswered').textContent=total;document.getElementById('statAverage').textContent=total?Math.round(correct/total*100)+'%':'0%';renderRanking();renderHostStats()}
@@ -367,6 +408,7 @@ function broadcastState(){
 }
 function createRoom(){
   if(hostPeer)return;
+  setQuizScreenMode('');
   hostMode=true;localRole='host';
   document.getElementById('quizStats').style.display='grid';
   document.getElementById('hostRoomBox').style.display='block';
@@ -464,6 +506,7 @@ function startQuiz(){
   document.getElementById('hostStartBtn').style.display='none';
   document.getElementById('joinPanel').style.display='none';
   document.getElementById('hostRoomBox').style.display='none';
+  setQuizScreenMode('host-live');
   startQuestion();
 }
 function startQuestion(){
@@ -554,6 +597,7 @@ function connectAsPlayer(){
   });
 }
 function renderClientWaiting(){
+  setQuizScreenMode('player');
   const card=document.getElementById('quizCard');
   if(!card)return;
   card.innerHTML=`<div class="quiz-waiting-screen"><div class="waiting-icon">⏳</div><h3>Waiting for host</h3><p>You are connected to the quiz room.</p><p>The questions will appear when the host starts the quiz.</p><div class="quiz-feedback show">Please keep this page open.</div></div>`;
@@ -567,7 +611,7 @@ function handleClientData(data){
   if(data.type==='state'){
     players=data.players||[];updateStats();
     if(data.finished)renderClientFinished();
-    else if(data.started&&quizIndex===data.questionIndex){}
+    else if(data.started){setQuizScreenMode('player')}
     return
   }
   if(data.type==='question'){quizIndex=data.index;renderClientQuestion(data.item,data.total,data.startedAt);return}
@@ -585,6 +629,7 @@ function handleClientData(data){
   if(data.type==='finished')renderClientFinished(data.topFive);
 }
 function renderClientQuestion(item,total,startedAt){
+  setQuizScreenMode('player');
   const card=document.getElementById('quizCard');
   const order=shuffle(item.o.map((label,i)=>({label,i})));
   card.innerHTML=`<div class="quiz-live-shell">
@@ -615,9 +660,13 @@ function renderClientQuestion(item,total,startedAt){
   }));
 }
 function renderClientFinished(topFive){
+  setQuizScreenMode('player');
   const ranked=topFive&&topFive.length?topFive:getRankedPlayers().slice(0,5);
   document.getElementById('quizCard').innerHTML=`<div class="quiz-final-screen"><h3>Quiz Complete</h3><p>Final result · Best 5 players</p><div class="final-top-five" id="finalTopFive"></div></div>`;
-  renderFinalTopFive();
+  const el=document.getElementById('finalTopFive');
+  if(el){
+    el.innerHTML=ranked.length?ranked.slice(0,5).map((p,i)=>`<div class="final-player"><div class="final-rank">#${i+1}</div><div><strong>${esc(p.avatar)} ${esc(p.name)}</strong><br><small>${p.correct||0} correct · ${p.answered||0} answered · ${p.answered?Math.round((p.correct||0)/p.answered*100):0}% accuracy</small></div><div class="final-score">${p.score||0}<br><small>points</small></div></div>`).join(''):'<p>No players completed the quiz.</p>';
+  }
 }
 function initFromQr(){const code=new URLSearchParams(location.search).get('quizJoin');if(code){document.getElementById('joinCode').value=code.replace(/\D/g,'').slice(0,6);setJoinStatus('Room number loaded from QR. Enter your name and tap Join as Player.');location.hash='quiz';}}
 document.addEventListener('input',e=>{if(e.target.id==='joinCode')e.target.value=e.target.value.replace(/\D/g,'').slice(0,6)});
